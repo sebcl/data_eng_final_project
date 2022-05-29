@@ -4,26 +4,11 @@
 CREATE SCHEMA IF NOT EXISTS `deng_nba_final` DEFAULT CHARACTER SET latin1 ;
 USE `deng_nba_final` ;
 
-CREATE TABLE IF NOT EXISTS `deng_nba_final`.`address` (
-  `address_id` TINYINT(10) NOT NULL AUTO_INCREMENT, -- Always below 50 
-  `address` VARCHAR(5) NOT NULL,
-  `address_state` VARCHAR(45) NOT NULL,
-  `address_city` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`address_id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
 CREATE TABLE IF NOT EXISTS `deng_nba_final`.`arena` (
   `arena_id` TINYINT(10) NOT NULL AUTO_INCREMENT,  
-  `address_id` TINYINT(10) NOT NULL,
   `capacity` VARCHAR(45) NOT NULL,
   `arena_name` VARCHAR(100) NOT NULL,
-  PRIMARY KEY (`arena_id`),
-  CONSTRAINT `fk_arena_add`
-	FOREIGN KEY (`address_id`)
-    REFERENCES `deng_nba_final`.`address` (`address_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (`arena_id`)
   )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -54,12 +39,13 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 CREATE TABLE IF NOT EXISTS `deng_nba_final`.`nba_season_attendance` (
-  `season_id` TINYINT(10) NOT NULL AUTO_INCREMENT, 
+  `attn_id` INT(10) NOT NULL AUTO_INCREMENT, 
+  `season_id` TINYINT(10) NULL, 
   `team_id` TINYINT(10) NOT NULL,
   `total_attendance` INT(20) NOT NULL,
   `home_avg` INT(20) NOT NULL,
   `away_avg` INT(20) NOT NULL,
-  PRIMARY KEY (`season_id`),
+  PRIMARY KEY (`attn_id`),
   CONSTRAINT `fk_season_ref`
     FOREIGN KEY (`season_id`)
     REFERENCES `deng_nba_final`.`nba_season` (`season_id`)
